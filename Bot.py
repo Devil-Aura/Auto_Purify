@@ -268,7 +268,7 @@ async def download_media(msg: Message, dest_dir: Path) -> Tuple[str, str, str]:
 @app.on_message(filters.private & filters.command("start"))
 async def start_cmd(_, m: Message):
     if not is_admin(m.from_user.id):
-        return await m.reply_text("❌ This is a private bot.")
+        return await m.reply_text("❌ This is a private bot of @World_Fastest_Bots.")
     await m.reply_text(
         "**Private Auto-Rename Bot**\n\n"
         "• Manual: reply to a media with `/rename New Name`\n"
@@ -289,7 +289,7 @@ RENAME_CMD_RE = re.compile(r"^/rename(?:@\w+)?\s+(.+)$", re.IGNORECASE)
 @app.on_message(filters.private & filters.command("rename"))
 async def manual_rename(_, m: Message):
     if not is_admin(m.from_user.id):
-        return await m.reply_text("❌ Private bot. Access denied.")
+        return await m.reply_text("❌ Private bot of @World_Fastest_Bots. Access denied.")
     if not m.reply_to_message or not (m.reply_to_message.video or m.reply_to_message.document or m.reply_to_message.audio):
         return await m.reply_text("Reply to a video/file with:\n`/rename New File Name`", quote=True)
 
@@ -462,7 +462,7 @@ async def metadata_cb(_, q: CallbackQuery):
 async def settitle(_, m: Message):
     if not is_admin(m.from_user.id): return
     if len(m.command) == 1:
-        return await m.reply_text("Give title\nExample: `/settitle Encoded By @Animes_Station`")
+        return await m.reply_text("Give title\nExample: `/settitle Encoded By @World_Fastest_Bots`")
     set_user_meta(m.from_user.id, "title", m.text.split(" ",1)[1])
     await m.reply_text("✅ Title saved")
 
@@ -470,7 +470,7 @@ async def settitle(_, m: Message):
 async def setauthor(_, m: Message):
     if not is_admin(m.from_user.id): return
     if len(m.command) == 1:
-        return await m.reply_text("Give author\nExample: `/setauthor @Animes_Station`")
+        return await m.reply_text("Give author\nExample: `/setauthor @World_Fastest_Bots`")
     set_user_meta(m.from_user.id, "author", m.text.split(" ",1)[1])
     await m.reply_text("✅ Author saved")
 
@@ -478,7 +478,7 @@ async def setauthor(_, m: Message):
 async def setartist(_, m: Message):
     if not is_admin(m.from_user.id): return
     if len(m.command) == 1:
-        return await m.reply_text("Give artist\nExample: `/setartist @Animes_Station`")
+        return await m.reply_text("Give artist\nExample: `/setartist @World_Fastest_Bots`")
     set_user_meta(m.from_user.id, "artist", m.text.split(" ",1)[1])
     await m.reply_text("✅ Artist saved")
 
@@ -703,11 +703,11 @@ async def auto_rename_go(_, m: Message):
             except Exception:
                 pass
 
-    await m.reply_text("✅ Batch finished.")
+    await m.reply_text("✅ Batch finished. Thx To Yae Miko {@World_Fastest_Bots}")
     # End session
     SESSIONS.pop(m.from_user.id, None)
 
 # ───────────────────────── Run ─────────────────────────
 if __name__ == "__main__":
-    print("🚀 Bot is running…")
+    print("🚀 Bot is running… By @World_Fastest_Bots")
     app.run()

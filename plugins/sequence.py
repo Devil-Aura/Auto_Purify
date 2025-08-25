@@ -1,6 +1,6 @@
 import asyncio
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, Message
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 import re
 from collections import defaultdict
 from datetime import datetime
@@ -34,6 +34,7 @@ def is_in_sequence_mode(user_id):
     """Check if user is in sequence mode"""
     return user_id in ACTIVE_SEQUENCES
 
+# ---------------- Sequence Mode ----------------
 @Client.on_message(filters.private & filters.command("startsequence"))
 async def start_sequence(client, message):
     user_id = message.from_user.id
@@ -83,7 +84,7 @@ async def end_sequence(client, message):
     ACTIVE_SEQUENCES.pop(user_id, None)
     await progress.edit_text(f"✅ Successfully sent {sent_count} files in sequence!")
 
-# Ensure this handler runs before any rename logic
+# ---------------- File Handler ----------------
 @Client.on_message(filters.private & (filters.document | filters.video | filters.audio), group=0)
 async def sequence_file_handler(client, message):
     user_id = message.from_user.id
@@ -109,6 +110,7 @@ async def sequence_file_handler(client, message):
         message.stop_propagation()
         await message.reply_text(f"📂 Added to sequence: {file_name}")
 
+# ---------------- Other Commands ----------------
 @Client.on_message(filters.private & filters.command("cancelsequence"))
 async def cancel_sequence(client, message):
     user_id = message.from_user.id

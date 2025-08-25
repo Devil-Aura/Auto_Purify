@@ -1,24 +1,24 @@
 {
     "name": "Auto Renamer Bot",
-    "description": "Telegram Auto File Renamer Bot ",
+    "description": "Telegram Auto File Renamer Bot",
     "logo": "https://graph.org/file/2f461540c83b362772714.jpg",
-    "keywords": ["Auto Renamer Bot", "Mongo DB"],    
+    "keywords": ["Auto Renamer Bot", "Telegram Bot"],    
     "repository": "https://github.com/JishuDeveloper/Auto-Rename-Bot",
     "env": {
         "API_ID": {
-            "description": "Your APP ID From my.telegram.org ",
+            "description": "Your APP ID From my.telegram.org",
             "value": ""
         },
         "API_HASH": {
-            "description": "Your API Hash From my.telegram.org ",
+            "description": "Your API Hash From my.telegram.org",
             "value": ""
         },
         "WEBHOOK": {
-            "description": "if your server is need web service! value = True else value = False",
+            "description": "If your server needs web service, set value = True else value = False",
             "value": "False"
         },
         "FORCE_SUB": {
-            "description": "Your force sub channel user name without [@] ",
+            "description": "Your force sub channel username without [@]",
             "value": "",
             "required": false 
         },
@@ -27,23 +27,14 @@
             "value": ""
         },
         "ADMIN": {
-            "description":"Add Your User ID multiple is use space to split"
+            "description": "Add Your User ID(s). Use space to separate multiple IDs"
         },
         "LOG_CHANNEL": {
-            "description":"Bot Log Sending Channel (just create a private channel and add bot to admin and take channel id to add this variable) ⚠️ id startswith -100 must",
+            "description": "Bot Log Channel ID (create a private channel, add bot as admin, copy channel id starting with -100)",
             "required": false           
         },
-        "DB_URL": {
-            "description": "Your Mongo DB URL Obtained From mongodb.com",
-            "value": ""
-        },
-        "DB_NAME":{ 
-            "description":"Your Mongo DB Database Name ",
-            "value": "",
-            "required": false
-        },
         "START_PIC": {
-            "description": "Your Bot start cmd Pic from @MT_TelegraPH_Bot",
+            "description": "Your Bot start command picture from @MT_TelegraPH_Bot",
             "value": "",
             "required": false
         }
@@ -53,4 +44,4 @@
             "url": "heroku/python"
         }
     ]
-}
+        }

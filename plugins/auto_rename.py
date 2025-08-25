@@ -1,21 +1,10 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from helper.database import codeflixbots
 
+
+# Command: /autorename
 @Client.on_message(filters.private & filters.command("autorename"))
 async def auto_rename_command(client, message):
-    user_id = message.from_user.id
-    
-    # Check if user is premium
-    is_premium = await codeflixbots.is_premium_user(user_id)
-    
-    if not is_premium:
-        return await message.reply_text(
-            "❌ **Premium Feature** ❌\n\n"
-            "File renaming is a premium feature.\n"
-            "Contact @introvertsama to rename files."
-        )
-
     # Extract and validate the format from the command
     command_parts = message.text.split(maxsplit=1)
     if len(command_parts) < 2 or not command_parts[1].strip():
@@ -28,33 +17,20 @@ async def auto_rename_command(client, message):
 
     format_template = command_parts[1].strip()
 
-    # Save the format template in the database
-    await codeflixbots.set_format_template(user_id, format_template)
-
     # Send confirmation message with the template in monospaced font
     await message.reply_text(
         f"**🌟 Fantastic! You're ready to auto-rename your files.**\n\n"
         "📩 Simply send the file(s) you want to rename.\n\n"
         f"**Your saved template:** `{format_template}`\n\n"
-        "Remember, it might take some time, but I'll ensure your files are renamed perfectly!✨"
+        "Remember, it might take some time, but I'll ensure your files are renamed perfectly!✨\n\n"
+        "⚡ Powered by @World_Fastest_Bots"
     )
 
 
+# Command: /setmedia
 @Client.on_message(filters.private & filters.command("setmedia"))
 async def set_media_command(client, message):
-    """Initiate media type selection with a sleek inline keyboard."""
-    user_id = message.from_user.id
-    
-    # Check if user is premium
-    is_premium = await codeflixbots.is_premium_user(user_id)
-    
-    if not is_premium:
-        return await message.reply_text(
-            "❌ **Premium Feature** ❌\n\n"
-            "Media type selection is a premium feature.\n"
-            "Contact @introvertsama to get premium access."
-        )
-        
+    """Initiate media type selection with an inline keyboard."""
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton("📜 Documents", callback_data="setmedia_document")],
         [InlineKeyboardButton("🎬 Videos", callback_data="setmedia_video")],
@@ -68,32 +44,20 @@ async def set_media_command(client, message):
         quote=True
     )
 
+
+# Handle inline button clicks for /setmedia
 @Client.on_callback_query(filters.regex(r"^setmedia_"))
 async def handle_media_selection(client, callback_query: CallbackQuery):
-    """Process the user's media type selection with flair and confirmation."""
-    user_id = callback_query.from_user.id
-    
-    # Check if user is premium
-    is_premium = await codeflixbots.is_premium_user(user_id)
-    
-    if not is_premium:
-        await callback_query.answer("This is a premium feature", show_alert=True)
-        return await callback_query.message.edit_text(
-            "❌ **Premium Feature** ❌\n\n"
-            "Media type selection is a premium feature.\n"
-            "Contact @introvertsama to get premium access."
-        )
-        
+    """Process the user's media type selection with confirmation."""
     media_type = callback_query.data.split("_", 1)[1].capitalize()  # Extract and capitalize media type
 
     try:
-        await codeflixbots.set_media_preference(user_id, media_type.lower())
-
         await callback_query.answer(f"Locked in: {media_type} 🎉")
         await callback_query.message.edit_text(
             f"🎯 **Media Preference Updated** 🎯\n"
             f"Your vibe is now set to: **{media_type}** ✅\n"
-            f"Ready to roll with your choice!"
+            f"Ready to roll with your choice!\n\n"
+            f"⚡ Powered by @World_Fastest_Bots"
         )
     except Exception as e:
         await callback_query.answer("Oops, something went wrong! 😅")

@@ -1,5 +1,4 @@
 import datetime
-import pytz
 import logging
 
 # In-memory storage (resets on restart)
@@ -18,12 +17,6 @@ class Database:
             metadata=True,
             metadata_code="Telegram : @World_Fastest_Bots",
             format_template=None,
-            premium=dict(
-                is_premium=False,
-                expiry_date=None,
-                added_on=None,
-                duration=None
-            ),
             ban_status=dict(
                 is_banned=False,
                 ban_duration=0,
@@ -114,58 +107,6 @@ class Database:
 
     async def set_video(self, user_id, video):
         USERS.setdefault(int(user_id), self.new_user(user_id))["video"] = video
-
-    # Premium
-    async def is_premium_user(self, id):
-        user = USERS.get(int(id))
-        if not user:
-            return False
-        premium = user["premium"]
-        if not premium.get("is_premium", False):
-            return False
-        expiry = premium.get("expiry_date")
-        if not expiry:
-            return False
-        expiry_date = datetime.datetime.fromisoformat(expiry)
-        current_date = datetime.datetime.now(pytz.UTC)
-        if current_date > expiry_date:
-            premium["is_premium"] = False
-            return False
-        return True
-
-    async def add_premium_user(self, id, duration):
-        user = USERS.setdefault(int(id), self.new_user(id))
-        current_date = datetime.datetime.now(pytz.UTC)
-        duration_value = int(duration[:-1] if duration[-2:] != "mh" else duration[:-2])
-        duration_unit = duration[-1] if duration[-2:] != "mh" else "mh"
-
-        if duration_unit == "m":
-            expiry_date = current_date + datetime.timedelta(minutes=duration_value)
-        elif duration_unit == "h":
-            expiry_date = current_date + datetime.timedelta(hours=duration_value)
-        elif duration_unit == "d":
-            expiry_date = current_date + datetime.timedelta(days=duration_value)
-        elif duration_unit == "mh":
-            expiry_date = current_date + datetime.timedelta(days=30 * duration_value)
-        else:
-            return False, "Invalid duration format"
-
-        user["premium"] = dict(
-            is_premium=True,
-            expiry_date=expiry_date.isoformat(),
-            added_on=current_date.isoformat(),
-            duration=duration,
-        )
-        return True, expiry_date.isoformat()
-
-    async def get_premium_details(self, id):
-        return USERS.get(int(id), {}).get("premium")
-
-    async def remove_premium(self, id):
-        if int(id) in USERS:
-            USERS[int(id)]["premium"]["is_premium"] = False
-            return True
-        return False
 
 
 # Global instance

@@ -1,81 +1,85 @@
 import re, os, time
-
-id_pattern = re.compile(r'^.\d+$')
+id_pattern = re.compile(r'^.\d+$') 
 
 class Config(object):
-    # Pyrogram client config
+    # pyro client config
     API_ID    = os.environ.get("API_ID", "22768311")
     API_HASH  = os.environ.get("API_HASH", "702d8884f48b42e865425391432b3794")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
 
-    # Removed MongoDB completely
+    # database config (Disabled MongoDB/JSON)
     PORT = os.environ.get("PORT", "2340")
-
-    # Other configs
+ 
+    # other configs
     BOT_UPTIME  = time.time()
     START_PIC   = os.environ.get("START_PIC", "https://graph.org/file/255a7bf3992c1bfb4b78a-03d5d005ec6812a81d.jpg")
-    ADMIN       = [int(a) if id_pattern.search(a) else a for a in os.environ.get('ADMIN', '5469101870').split()] if os.environ.get('ADMIN') else []
-    FORCE_SUB_CHANNELS = os.environ.get('FORCE_SUB_CHANNELS', '@World_Fastest_Bots').split(',')
+    ADMIN       = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '5469101870').split()]
+    FORCE_SUB_CHANNELS = ["@World_Fastest_Bots"]
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1003058967184"))
-    BOT_OWNER   = int(os.environ.get("BOT_OWNER", "6040503076"))
+    BOT_OWNER = int(os.environ.get("BOT_OWNER", "6040503076"))
     DUMP_CHANNEL = int(os.environ.get("DUMP_CHANNEL", "-1003058967184"))
-
-    # Webhook toggle (not used in this minimal run)
+    
+    # webhook config     
     WEBHOOK = bool(os.environ.get("WEBHOOK", "True"))
 
+
 class Txt(object):
-    START_TXT = """<b>ʜᴇʏ! {}
+    # part of text configuration
+        
+    START_TXT = """<b>ʜᴇʏ! {}  
 
-» I am an advanced Auto Rename Bot! I can auto-rename your files with custom captions, thumbnails and sequence them perfectly.</b>"""
+» ɪ ᴀᴍ ᴀᴅᴠᴀɴᴄᴇᴅ ʀᴇɴᴀᴍᴇ ʙᴏᴛ! ᴡʜɪᴄʜ ᴄᴀɴ ᴀᴜᴛᴏʀᴇɴᴀᴍᴇ ʏᴏᴜʀ ғɪʟᴇs ᴡɪᴛʜ ᴄᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ ᴀɴᴅ ᴛʜᴜᴍʙɴᴀɪʟ ᴀɴᴅ ᴀʟsᴏ sᴇǫᴜᴇɴᴄᴇ ᴛʜᴇᴍ ᴘᴇʀғᴇᴄᴛʟʏ</b>"""
+    
+    FILE_NAME_TXT = """<b>» <u>sᴇᴛᴜᴘ ᴀᴜᴛᴏ ʀᴇɴᴀᴍᴇ ғᴏʀᴍᴀᴛ</u></b>
 
-    FILE_NAME_TXT = """<b>» <u>Setup auto rename format</u></b>
+<b>ᴠᴀʀɪᴀʙʟᴇꜱ :</b>
+➲ ᴇᴘɪꜱᴏᴅᴇ - ᴛᴏ ʀᴇᴘʟᴀᴄᴇ ᴇᴘɪꜱᴏᴅᴇ ɴᴜᴍʙᴇʀ  
+➲ ꜱᴇᴀꜱᴏɴ - ᴛᴏ ʀᴇᴘʟᴀᴄᴇ ꜱᴇᴀꜱᴏɴ ɴᴜᴍʙᴇʀ  
+➲ ǫᴜᴀʟɪᴛʏ - ᴛᴏ ʀᴇᴘʟᴀᴄᴇ ǫᴜᴀʟɪᴛʏ  
 
-<b>Variables :</b>
-• <code>{episode}</code> – episode number
-• <code>{season}</code> – season number
-• <code>{quality}</code> – quality (e.g. 1080p)
+<b>‣ ꜰᴏʀ ᴇx:- </b> `/autorename Oᴠᴇʀғʟᴏᴡ [Sseason Eepisode] - [Dual] quality`
 
-<b>Example:</b> <code>/autorename Overflow [S{season} E{episode}] - [Dual] {quality}</code>"""
-
-    ABOUT_TXT = """<b>❍ ᴍʏ ɴᴀᴍᴇ : <a href="https://t.me/World_Fastest_Bots">Auto Rename</a>
-❍ ᴅᴇᴠᴇʟᴏᴘᴇʀ : <a href="https://t.me/World_Fastest_Bots">World Fastest Bots</a>
-❍ ʟᴀɴɢᴜᴀɢᴇ : <a href="https://www.python.org/">Python</a>
-❍ ʜᴏꜱᴛᴇᴅ ᴏɴ : Private Server
+<b>‣ /Autorename: ʀᴇɴᴀᴍᴇ ʏᴏᴜʀ ᴍᴇᴅɪᴀ ꜰɪʟᴇꜱ ʙʏ ɪɴᴄʟᴜᴅɪɴɢ 'ᴇᴘɪꜱᴏᴅᴇ' ᴀɴᴅ 'ǫᴜᴀʟɪᴛʏ' ᴠᴀʀɪᴀʙʟᴇꜱ ɪɴ ʏᴏᴜʀ ᴛᴇxᴛ, ᴛᴏ ᴇxᴛʀᴀᴄᴛ ᴇᴘɪꜱᴏᴅᴇ ᴀɴᴅ ǫᴜᴀʟɪᴛʏ ᴘʀᴇꜱᴇɴᴛ ɪɴ ᴛʜᴇ ᴏʀɪɢɪɴᴀʟ ꜰɪʟᴇɴᴀᴍᴇ. """
+    
+    ABOUT_TXT = f"""<b>❍ ᴍʏ ɴᴀᴍᴇ : <a href="https://t.me/World_Fastest_Bots">ᴀᴜᴛᴏ ʀᴇɴᴀᴍᴇ</a>
+❍ ᴅᴇᴠᴇʟᴏᴩᴇʀ : <a href="https://t.me/World_Fastest_Bots">World Fastest Bots</a>
+❍ ʟᴀɴɢᴜᴀɢᴇ : <a href="https://www.python.org/">ᴘʏᴛʜᴏɴ</a>
+❍ ʜᴏꜱᴛᴇᴅ ᴏɴ : <a href="https://t.me/World_Fastest_Bots">World Fastest Bots</a>
 ❍ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ : <a href="https://t.me/World_Fastest_Bots">World Fastest Bots</a></b>"""
+    
+    THUMBNAIL_TXT = """<b><u>» ᴛᴏ ꜱᴇᴛ ᴄᴜꜱᴛᴏᴍ ᴛʜᴜᴍʙɴᴀɪʟ</u></b>
+    
+➲ /start: ꜱᴇɴᴅ ᴀɴʏ ᴘʜᴏᴛᴏ ᴛᴏ ꜱᴇᴛ ᴀꜱ ᴛʜᴜᴍʙɴᴀɪʟ..
+➲ /del_thumb: ᴛᴏ ᴅᴇʟᴇᴛᴇ ʏᴏᴜʀ ᴏʟᴅ ᴛʜᴜᴍʙɴᴀɪʟ.
+➲ /view_thumb: ᴛᴏ ᴠɪᴇᴡ ʏᴏᴜʀ ᴄᴜʀʀᴇɴᴛ ᴛʜᴜᴍʙɴᴀɪʟ."""
 
-    THUMBNAIL_TXT = """<b><u>» Custom thumbnail</u></b>
-• Send a photo while in /start to set as thumbnail
-• /del_thumb – delete thumbnail
-• /view_thumb – view thumbnail
+    CAPTION_TXT = """<b><u>» ᴛᴏ ꜱᴇᴛ ᴄᴜꜱᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ</u></b>
+    
+<b>ᴠᴀʀɪᴀʙʟᴇꜱ :</b>         
+ꜱɪᴢᴇ: {ꜰɪʟᴇꜱɪᴢᴇ}
+ᴅᴜʀᴀᴛɪᴏɴ: {duration}
+ꜰɪʟᴇɴᴀᴍᴇ: {ꜰɪʟᴇɴᴀᴍᴇ}
 
-If no thumbnail is saved, file's original thumb is used."""
+➲ /set_caption: ꜱᴇᴛ ᴀ ᴄᴜꜱᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ.
+➲ /see_caption: ᴠɪᴇᴡ ʏᴏᴜʀ ᴄᴜꜱᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ.
+➲ /del_caption: ᴅᴇʟᴇᴛᴇ ʏᴏᴜʀ ᴄᴜꜱᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ."""
 
-    CAPTION_TXT = """<b><u>» Custom caption</u></b>
+    PROGRESS_BAR = """\n
+<b>» Size</b> : {1} | {2}
+<b>» Done</b> : {0}%
+<b>» Speed</b> : {3}/s
+<b>» ETA</b> : {4} """
+    
+    HELP_TXT = """<b>ʜᴇʀᴇ ɪꜱ ʜᴇʟᴘ ᴍᴇɴᴜ ɪᴍᴘᴏʀᴛᴀɴᴛ ᴄᴏᴍᴍᴀɴᴅꜱ:
 
-<b>Variables:</b>
-• <code>{filename}</code> • <code>{filesize}</code> • <code>{duration}</code>
+➲ /Autorename: ᴀᴜᴛᴏ ʀᴇɴᴀᴍᴇ ꜰɪʟᴇꜱ.
+➲ /Metadata: ᴏɴ/ᴏꜰꜰ ᴍᴇᴛᴀᴅᴀᴛᴀ.
+➲ /Help: ɢᴇᴛ ǫᴜɪᴄᴋ ᴀꜱꜱɪꜱᴛᴀɴᴄᴇ.</b>"""
 
-• /set_caption – set a custom caption
-• /see_caption – view your caption
-• /del_caption – delete your caption"""
+    SEQUENCE_TXT = """
+<b>📦 <u>SEQUENCE FILES MANAGER</u></b>
 
-    PROGRESS_BAR = """\n<b>» Done</b> : {0}%\n<b>» Size</b> : {1} | {2}\n<b>» Speed</b> : {3}/s\n<b>» ETA</b> : {4}"""
-
-    DONATE_TXT = "<b>Donations are not available right now. Follow @World_Fastest_Bots for updates.</b>"
-    PREMIUM_TXT = "<b>Premium features are disabled in this build.</b>"
-    PREPLANS_TXT = "<b>No premium plans available.</b>"
-
-    HELP_TXT = """<b>📖 Help</b>
-
-• /autorename – set template for auto-rename
-• /metadata – manage metadata (title/author/artist/audio/subtitle/video)
-• /help – show this help"""
-
-    SOURCE_TXT = "<b>This bot is maintained by @World_Fastest_Bots</b>"
-    META_TXT = "<b>Use /metadata to toggle & set fields using /settitle /setauthor /setartist /setaudio /setsubtitle /setvideo</b>"
-
-    SEQUENCE_TXT = """<b>📦 Sequence Manager</b>
-• /startsequence – start
-• /showsequence – list
-• /endsequence – finish & send in order
-• /cancelsequence – cancel"""
+➲ /startsequence - Begin collecting files
+➲ /showsequence - View sequence
+➲ /endsequence - Send sorted files
+➲ /cancelsequence - Cancel sequence"""

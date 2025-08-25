@@ -51,6 +51,11 @@ async def check_anti_nsfw(new_name, message):
     for category, keywords in nsfw_keywords.items():
         for keyword in keywords:
             if keyword.lower() in lower_name:
-                await message.reply_text("You can't rename files with NSFW content.")
+                await message.reply_text(
+                    "🚫 **NSFW Content Detected** 🚫\n\n"
+                    "You can't rename files with NSFW content.\n\n"
+                    "⚡ Powered by @World_Fastest_Bots\n"
+                    "📢 Join us: https://t.me/World_Fastest_Bots"
+                )
                 return True
     return False
